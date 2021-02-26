@@ -25,14 +25,14 @@ continueBtn.onclick = () => {
   infoBox.classList.remove("activeInfo"); //hide info box
   quizBox.classList.add("activeQuiz"); //show quiz box
   showQuestions(0); //calling showQestions function
-  questionCounter(1); //passing 1 parameter to queCounter
+  queCounter(1); //passing 1 parameter to queCounter
   startTimer(15); //calling startTimer function
-  startTimerLine(0); //calling startTimerLine function
+  // startTimerLine(0); //calling startTimerLine function
 };
 
 let timeValue = 15;
-let questionCount = 0;
-let questionNumber = 1;
+let queCount = 0;
+let queNumb = 1;
 let userScore = 0;
 let counter;
 let counterLine;
@@ -46,16 +46,16 @@ restartQuiz.onclick = () => {
   quizBox.classList.add("activeQuiz"); //show quiz box
   resultBox.classList.remove("activeResult"); //hide result box
   timeValue = 15;
-  questionCount = 0;
-  questionNumber = 1;
+  queCount = 0;
+  queNumb = 1;
   userScore = 0;
   widthValue = 0;
-  showQuestions(questionCount); //calling showQestions function
-  queCounter(questionNumber); //passing que_numb value to queCounter
+  showQuestions(queCount); //calling showQestions function
+  queCounter(queNumb); //passing que_numb value to queCounter
   clearInterval(counter); //clear counter
   clearInterval(counterLine); //clear counterLine
   startTimer(timeValue); //calling startTimer function
-  startTimerLine(widthValue); //calling startTimerLine function
+  // startTimerLine(widthValue); //calling startTimerLine function
   timeText.textContent = "Time Left"; //change the text of timeText to Time Left
   nextBtn.classList.remove("show"); //hide the next button
 };
@@ -65,21 +65,21 @@ quitQuiz.onclick = () => {
   window.location.reload(); //reload the current window
 };
 
-const nextBtn = document.querySelector("footer .nextBtn");
-const bottomQuestionCounter = document.querySelector("footer .totalQuestion");
+const nextBtn = document.querySelector("footer .next-btn");
+const bottomQuesCounter = document.querySelector("footer .total-question");
 
 // if Next Que button clicked
 nextBtn.onclick = () => {
-  if (questionCount < questions.length - 1) {
+  if (queCount < questions.length - 1) {
     //if question count is less than total question length
-    questionCount++; //increment the que_count value
-    questionNumber++; //increment the que_numb value
-    showQuestions(questionCount); //calling showQestions function
-    queCounter(questionNumber); //passing que_numb value to queCounter
+    queCount++; //increment the que_count value
+    queNumb++; //increment the que_numb value
+    showQuestions(queCount); //calling showQestions function
+    queCounter(queNumb); //passing que_numb value to queCounter
     clearInterval(counter); //clear counter
     clearInterval(counterLine); //clear counterLine
     startTimer(timeValue); //calling startTimer function
-    startTimerLine(widthValue); //calling startTimerLine function
+    // startTimerLine(widthValue); //calling startTimerLine function
     timeText.textContent = "Time Left"; //change the timeText to Time Left
     nextBtn.classList.remove("show"); //hide the next button
   } else {
@@ -91,30 +91,30 @@ nextBtn.onclick = () => {
 
 // getting questions and options from array
 function showQuestions(index) {
-  const questionText = document.querySelector(".question-text");
+  const queText = document.querySelector(".question-text");
 
   //creating a new span and div tag for question and option and passing the value using array index
-  // let questionTag =
-  //   "<span>" +
-  //   questions[index].number +
-  //   ". " +
-  //   questions[index].questions +
-  //   "</span>";
-  // let optionTag =
-  //   '<div class="option"><span>' +
-  //   questions[index].options[0] +
-  //   "</span></div>" +
-  //   '<div class="option"><span>' +
-  //   questions[index].options[1] +
-  //   "</span></div>" +
-  //   '<div class="option"><span>' +
-  //   questions[index].options[2] +
-  //   "</span></div>" +
-  //   '<div class="option"><span>' +
-  //   questions[index].options[3] +
-  //   "</span></div>";
-  // questionText.innerHTML = questionTag; //adding new span tag inside que_tag
-  // optionList.innerHTML = optionTag; //adding new div tag inside option_tag
+  let queTag =
+    "<span>" +
+    questions[index].numb +
+    ". " +
+    questions[index].question +
+    "</span>";
+  let optionTag =
+    '<div class="option"><span>' +
+    questions[index].options[0] +
+    "</span></div>" +
+    '<div class="option"><span>' +
+    questions[index].options[1] +
+    "</span></div>" +
+    '<div class="option"><span>' +
+    questions[index].options[2] +
+    "</span></div>" +
+    '<div class="option"><span>' +
+    questions[index].options[3] +
+    "</span></div>";
+  queText.innerHTML = queTag; //adding new span tag inside que_tag
+  optionList.innerHTML = optionTag; //adding new div tag inside option_tag
 
   const option = optionList.querySelectorAll(".option");
 
@@ -132,7 +132,7 @@ function optionSelected(answer) {
   clearInterval(counter); //clear counter
   clearInterval(counterLine); //clear counterLine
   let userAns = answer.textContent; //getting user selected option
-  let correcAns = questions[questionCount].answer; //getting correct answer from array
+  let correcAns = questions[queCount].answer; //getting correct answer from array
   const allOptions = optionList.children.length; //getting all option items
 
   if (userAns == correcAns) {
@@ -148,7 +148,7 @@ function optionSelected(answer) {
     console.log("Wrong Answer");
 
     for (i = 0; i < allOptions; i++) {
-      if (option_list.children[i].textContent == correcAns) {
+      if (optionList.children[i].textContent == correcAns) {
         //if there is an option which is matched to an array answer
         optionList.children[i].setAttribute("class", "option correct"); //adding green color to matched option
         optionList.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
@@ -159,7 +159,7 @@ function optionSelected(answer) {
   for (i = 0; i < allOptions; i++) {
     optionList.children[i].classList.add("disabled"); //once user select an option then disabled all options
   }
-  next_btn.classList.add("show"); //show the next button if user selected any option
+  nextBtn.classList.add("show"); //show the next button if user selected any option
 }
 
 function showResult() {
@@ -211,11 +211,11 @@ function startTimer(time) {
     if (time < 0) {
       //if timer is less than 0
       clearInterval(counter); //clear counter
-      timeText.textContent = "Time Off"; //change the time text to time off
+      timeText.textContent = "Out of time"; //change the time text to time off
       const allOptions = optionList.children.length; //getting all option items
-      let correcAns = questions[que_count].answer; //getting correct answer from array
+      let correcAns = questions[queCount].answer; //getting correct answer from array
       for (i = 0; i < allOptions; i++) {
-        if (option_list.children[i].textContent == correcAns) {
+        if (optionList.children[i].textContent == correcAns) {
           //if there is an option which is matched to an array answer
           optionList.children[i].setAttribute("class", "option correct"); //adding green color to matched option
           optionList.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
@@ -223,105 +223,32 @@ function startTimer(time) {
         }
       }
       for (i = 0; i < allOptions; i++) {
-        option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+        optionList.children[i].classList.add("disabled"); //once user select an option then disabled all options
       }
       nextBtn.classList.add("show"); //show the next button if user selected any option
     }
   }
 }
 
-function startTimerLine(time) {
-  counterLine = setInterval(timer, 29);
-  function timer() {
-    time += 1; //upgrading time value with 1
-    timeLine.style.width = time + "px"; //increasing width of time_line with px by time value
-    if (time > 549) {
-      //if time value is greater than 549
-      clearInterval(counterLine); //clear counterLine
-    }
-  }
-}
+// function startTimerLine(time) {
+//   counterLine = setInterval(timer, 29);
+//   function timer() {
+//     time += 1; //upgrading time value with 1
+//     timeLine.style.width = time + "px"; //increasing width of time_line with px by time value
+//     if (time > 549) {
+//       //if time value is greater than 549
+//       clearInterval(counterLine); //clear counterLine
+//     }
+//   }
+// }
 
-function questionCounter(index) {
+function queCounter(index) {
   //creating a new span tag and passing the question number and total question
-  let totalQuestionCountTag =
+  let totalQueCounTag =
     "<span><p>" +
     index +
     "</p> of <p>" +
     questions.length +
     "</p> Questions</span>";
-  bottomQuestionCounter.innerHTML = totalQuestionCountTag; //adding new span tag inside bottom_ques_counter
+  bottomQuesCounter.innerHTML = totalQueCounTag; //adding new span tag inside bottom_ques_counter
 }
-
-// creating an array and passing the number, questions, options, and answers
-let questions = [
-  {
-    number: 1,
-    question: "What does HTML stand for?",
-    answer: "Hyper Text Markup Language",
-    options: [
-      "Hyper Text Preprocessor",
-      "Hyper Text Markup Language",
-      "Hyper Text Multiple Language",
-      "Hyper Tool Multi Language",
-    ],
-  },
-  {
-    number: 2,
-    question: "What does CSS stand for?",
-    answer: "Cascading Style Sheet",
-    options: [
-      "Common Style Sheet",
-      "Colorful Style Sheet",
-      "Computer Style Sheet",
-      "Cascading Style Sheet",
-    ],
-  },
-  {
-    number: 3,
-    question: "What does PHP stand for?",
-    answer: "Hypertext Preprocessor",
-    options: [
-      "Hypertext Preprocessor",
-      "Hypertext Programming",
-      "Hypertext Preprogramming",
-      "Hometext Preprocessor",
-    ],
-  },
-  {
-    number: 4,
-    question: "What does SQL stand for?",
-    answer: "Structured Query Language",
-    options: [
-      "Stylish Question Language",
-      "Stylesheet Query Language",
-      "Statement Question Language",
-      "Structured Query Language",
-    ],
-  },
-  {
-    number: 5,
-    question: "What does XML stand for?",
-    answer: "eXtensible Markup Language",
-    options: [
-      "eXtensible Markup Language",
-      "eXecutable Multiple Language",
-      "eXTra Multi-Program Language",
-      "eXamine Multiple Language",
-    ],
-  },
-  // you can uncomment the below codes and make duplicate as more as you want to add question
-  // but remember you need to give the numb value serialize like 1,2,3,5,6,7,8,9.....
-
-  //   {
-  //   numb: 6,
-  //   question: "Your Question is Here",
-  //   answer: "Correct answer of the question is here",
-  //   options: [
-  //     "Option 1",
-  //     "option 2",
-  //     "option 3",
-  //     "option 4"
-  //   ]
-  // },
-];
