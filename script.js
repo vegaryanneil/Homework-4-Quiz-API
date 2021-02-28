@@ -167,29 +167,9 @@ function showResult() {
   quizBox.classList.remove("activeQuiz"); //hide quiz box
   resultBox.classList.add("activeResult"); //show result box
   const scoreText = resultBox.querySelector(".score-text");
-  if (userScore > 3) {
-    // if user scored more than 3
-    //creating a new span tag and passing the user score number and total question number
+  if (userScore >= 1) {
     let scoreTag =
       "<span>and congrats! 🎉, You got <p>" +
-      userScore +
-      "</p> out of <p>" +
-      questions.length +
-      "</p></span>";
-    scoreText.innerHTML = scoreTag; //adding new span tag inside score_Text
-  } else if (userScore > 1) {
-    // if user scored more than 1
-    let scoreTag =
-      "<span>and nice 😎, You got <p>" +
-      userScore +
-      "</p> out of <p>" +
-      questions.length +
-      "</p></span>";
-    scoreText.innerHTML = scoreTag;
-  } else {
-    // if user scored less than 1
-    let scoreTag =
-      "<span>and sorry 😐, You got only <p>" +
       userScore +
       "</p> out of <p>" +
       questions.length +
@@ -230,18 +210,6 @@ function startTimer(time) {
   }
 }
 
-// function startTimerLine(time) {
-//   counterLine = setInterval(timer, 29);
-//   function timer() {
-//     time += 1; //upgrading time value with 1
-//     timeLine.style.width = time + "px"; //increasing width of time_line with px by time value
-//     if (time > 549) {
-//       //if time value is greater than 549
-//       clearInterval(counterLine); //clear counterLine
-//     }
-//   }
-// }
-
 function queCounter(index) {
   //creating a new span tag and passing the question number and total question
   let totalQueCounTag =
@@ -252,3 +220,41 @@ function queCounter(index) {
     "</p> Questions</span>";
   bottomQuesCounter.innerHTML = totalQueCounTag; //adding new span tag inside bottom_ques_counter
 }
+
+const highScoresList = document.getElementById("highScoresList");
+const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+highScoresList.innerHTML = highScores
+  .map((userScore) => {
+    return `<li class="high-score">${userScore.name} - ${userScore.score}</li>`;
+  })
+  .join("");
+
+// Save High Score
+const username = document.getElementById("username");
+const saveScoreBtn = document.getElementById("saveScoreBtn");
+const finalScore = document.getElementById("finalScore");
+const mostRecentScore = localStorage.getItem("mostRecentScore");
+
+const MAX_HIGH_SCORES = 5;
+
+finalScore.innerText = mostRecentScore;
+
+username.addEventListener("keyup", () => {
+  saveScoreBtn.disabled = !username.value;
+});
+
+saveHighScore = (e) => {
+  e.preventDefault();
+
+  const score = {
+    score: mostRecentScore,
+    name: username.value,
+  };
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(5);
+
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  window.location.assign("/");
+};

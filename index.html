@@ -9,7 +9,11 @@
 </head>
 <body>
     <!-- start Quiz button -->
-    <div class="start-btn"><button>Start Quiz</button></div>
+    <div class="start-btn">
+    <button>Start Quiz</button>
+    <a href="highscore.html"><button>High Scores</button></a>
+    </div>
+    
     <!-- Info Box -->
     <main class="info-box">
         <div class="info-title"><span>Rules</span></div>
@@ -64,13 +68,25 @@
             <!-- Here I've inserted Score Result from JavaScript -->
         <aside class="scoreboard"></aside>
         </div>
+
         <div class="buttons">
+                <h1 id="finalScore"></h1>
+                <form action="input">
+                <input type="text"
+                name="username"
+                id="username"
+                placeholder="username"
+                >
+            </form>
+            <button type="submit" class="save" id="saveScoreBtn" onclick="saveHighScores(event)">Save</button>
             <button class="restart">Replay</button>
             <button class="quit">Quit</button>
         </div>
+        </div>
     </div>
 
-    <!-- Inside this JavaScript file I've inserted Questions and Options only -->
+      
+    </aside>
     <script src="questions.js"></script>
 
     <script src="script.js"></script>
