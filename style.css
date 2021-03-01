@@ -1,5 +1,7 @@
+/* Standardized edits across entire project */
 :root {
   background-color: #5b5b5b;
+  /* using rems - converted to 1rem = 10px */
   font-size: 62.5%;
 }
 
@@ -91,7 +93,7 @@ h3 {
   color: #b67171;
   background-color: white;
 }
-
+/* Added animation to the button. It raises a bit when hovered */
 .btn:hover {
   cursor: pointer;
   box-shadow: 0 0.4rem 1.4rem 0 #b6717180;
@@ -99,13 +101,14 @@ h3 {
   transition: transform 150ms;
 }
 
+/* Mainly used for the SAVE button. I added this effect so the user is prompted to enter their name before saving */
 .btn[disabled]:hover {
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
 }
 
-/* FORMS */
+/* FORMS - save username section */
 form {
   width: 100%;
   display: flex;

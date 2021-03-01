@@ -1,3 +1,4 @@
+/* applied styles from style.css then made some specific edits to the choices */
 .choice-container {
   display: flex;
   margin-bottom: 0.5rem;
@@ -29,7 +30,7 @@
   padding: 1.5rem;
   width: 100%;
 }
-
+/* used to color code when users select an answer - green for correct, red for incorrect */
 .correct {
   background-color: #28a745;
 }
@@ -38,7 +39,7 @@
   background-color: #dc3545;
 }
 
-/* HUD */
+/* score, and question styles */
 
 #hud {
   display: flex;

@@ -20,12 +20,20 @@ function updateCountdown() {
   const minutes = Math.floor(time / 60);
   let seconds = time % 60;
 
-  countdownEl.innerHTML = "Time Left: " + time;
+  countdownEl.innerHTML = "Time Left: " + time + "s";
 
   time--;
   time = time < 0 ? 0 : time;
+
+  // I cannot figure how to subtract time from timer when answer is incorrect.
+
+  const incorrectAns = document.getElementsByClassName("incorrect");
+  if (incorrectAns === "incorrect") {
+    time - 5;
+  }
 }
 
+// List of questions from w3 schools javascript quiz
 let questions = [
   {
     question: "Inside which HTML element do we put the JavaScript?",
@@ -69,13 +77,15 @@ let questions = [
   },
 ];
 
-//CONSTANTS
+// number of points each question is worth.
 const CORRECT_BONUS = 10;
+// max number of questions
 const MAX_QUESTIONS = 5;
 
 startGame = () => {
   questionCounter = 0;
   score = 0;
+  // grabs array of question
   availableQuesions = [...questions];
   getNewQuestion();
 };
@@ -83,9 +93,10 @@ startGame = () => {
 getNewQuestion = () => {
   if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     localStorage.setItem("mostRecentScore", score);
-    //go to the end page
+    // to the end page
     return window.location.assign("end.html");
   }
+  // adds the to the number of question after each question is answered
   questionCounter++;
   progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
 
@@ -115,10 +126,6 @@ choices.forEach((choice) => {
 
     if (classToApply === "correct") {
       incrementScore(CORRECT_BONUS);
-
-      if (classToApply === "incorrect") {
-        updateCountdown(time - 5000);
-      }
     }
 
     selectedChoice.parentElement.classList.add(classToApply);
