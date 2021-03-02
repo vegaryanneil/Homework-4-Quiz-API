@@ -85,58 +85,65 @@ const MAX_QUESTIONS = 5;
 startGame = () => {
   questionCounter = 0;
   score = 0;
-  // grabs array of question
+  // stores array of question using a spread operator
   availableQuesions = [...questions];
   getNewQuestion();
 };
-
+// when out of question it will redirect to endpage
 getNewQuestion = () => {
   if (availableQuesions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+    // saves score
     localStorage.setItem("mostRecentScore", score);
     // to the end page
     return window.location.assign("end.html");
   }
-  // adds the to the number of question after each question is answered
+  // when game starts it starts at 1
   questionCounter++;
+  // updates progress of questions
   progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
-
+  // Grabs and displays questions
   const questionIndex = Math.floor(Math.random() * availableQuesions.length);
   currentQuestion = availableQuesions[questionIndex];
   question.innerText = currentQuestion.question;
-
+  // grabs and displays choices associated with question
   choices.forEach((choice) => {
     const number = choice.dataset["number"];
     choice.innerText = currentQuestion["choice" + number];
   });
 
+  // gets rid of questions that are used
   availableQuesions.splice(questionIndex, 1);
   acceptingAnswers = true;
 };
-
+// javascript to recognize when a choice is clicked.
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     if (!acceptingAnswers) return;
-
+    // pairs the question with the correct answer via data-number
     acceptingAnswers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset["number"];
 
     const classToApply =
+      // if answer is correct - apply css to show it is green
+      // if answer is incorrect - apply css to show it is red
       selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
 
     if (classToApply === "correct") {
       incrementScore(CORRECT_BONUS);
     }
-
     selectedChoice.parentElement.classList.add(classToApply);
-
     setTimeout(() => {
+      // will remove class at the end of answering question then move on to next question
       selectedChoice.parentElement.classList.remove(classToApply);
+      // After question is answered, it gets a new question.
+
       getNewQuestion();
+      //  1 second delay before transitioning to next question
     }, 1000);
   });
 });
-
+// totals out score throughout the game
 incrementScore = (num) => {
   score += num;
   scoreText.innerText = score;
